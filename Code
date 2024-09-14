@@ -1,24 +1,32 @@
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
+import java.util.Scanner;
 
 public class Solution {
-
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int t = in.nextInt();
-        for(int a0 = 0; a0 < t; a0++){
-            int sum=0;
-            int n = in.nextInt();
-            for(int a1=1;a1<n;a1++){
-                if((a1%3==0)||(a1%5==0)){
-                    sum=sum+a1;
-                }
-            }
-            System.out.println(sum);
+        int t = in.nextInt();  // Number of test cases
+        for (int a0 = 0; a0 < t; a0++) {
+            int n = in.nextInt();  // The upper limit for the current test case
+            System.out.println(calculateSumOfMultiples(n));
         }
         in.close();
+    }
+    
+    // Function to calculate the sum of multiples of 3 or 5 below n
+    private static long calculateSumOfMultiples(int n) {
+        // We want numbers less than n, so we subtract 1 from n
+        n = n - 1;
+        
+        long sumOf3 = sumOfMultiples(3, n);
+        long sumOf5 = sumOfMultiples(5, n);
+        long sumOf15 = sumOfMultiples(15, n);  // To avoid double-counting multiples of both 3 and 5
+        
+        // Return the total sum
+        return sumOf3 + sumOf5 - sumOf15;
+    }
+    
+    // Function to calculate the sum of multiples of a given number x below a limit n
+    private static long sumOfMultiples(int x, int n) {
+        long k = n / x;  // Number of multiples of x below n
+        return x * k * (k + 1) / 2;  // Sum of the first k multiples of x
     }
 }
